@@ -9,5 +9,7 @@ import { ContactComponent } from '../contact/contact.component';
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'menu', component: MenuComponent },
+    { path: 'contact', component: ContactComponent },
+    { path: 'about', component: AboutComponent },
     { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
