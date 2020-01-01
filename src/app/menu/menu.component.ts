@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
     this.selectedDish = dish;
   }
 
+  // this should be write like that. We cannot declare the disService in the typical way.
   constructor(private dishService: DishService) { }
 
   ngOnInit() {
