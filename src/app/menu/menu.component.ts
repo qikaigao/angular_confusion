@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
 // import { DISHES } from '../shared/dishes';
-import {DishService} from '../services/dish.service';
+import { DishService } from '../services/dish.service';
+import { inject } from '@angular/core/testing';
+
 
 @Component({
   selector: 'app-menu',
@@ -10,14 +12,10 @@ import {DishService} from '../services/dish.service';
 })
 export class MenuComponent implements OnInit {
   dishes: Dish[];
-  selectedDish: Dish;
-
-  onSelect(dish: Dish) {
-    this.selectedDish = dish;
-  }
 
   // this should be write like that. We cannot declare the disService in the typical way.
-  constructor(private dishService: DishService) { }
+  constructor(private dishService: DishService,
+    @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
     this.dishService.getDishes().subscribe((dishes) => this.dishes = dishes);
