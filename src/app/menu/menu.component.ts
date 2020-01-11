@@ -12,13 +12,15 @@ import { inject } from '@angular/core/testing';
 })
 export class MenuComponent implements OnInit {
   dishes: Dish[];
+  errMess: string;
 
   // this should be write like that. We cannot declare the disService in the typical way.
   constructor(private dishService: DishService,
     @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
-    this.dishService.getDishes().subscribe((dishes) => this.dishes = dishes);
+    this.dishService.getDishes().subscribe((dishes) => this.dishes = dishes,
+      errMess => this.errMess = <any>errMess);
   }
 
 }
