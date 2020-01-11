@@ -25,6 +25,7 @@ export class DishdetailComponent implements OnInit {
   next: string;
   comment: Comment;
   commentForm: FormGroup;
+  dishcopy: Dish;
   @ViewChild('cform', { static: false }) commentFormDirective;
 
   formErrors = {
@@ -52,13 +53,12 @@ export class DishdetailComponent implements OnInit {
   ngOnInit() {
     this.createForm();
 
-    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    this.onValueChanged(); // (re)set validation messages now
+
 
     this.dishservice.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-      .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); }, errMess => this.errMess = <any>errMess);
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); }, errMess => this.errMess = <any>errMess);
 
   }
 
@@ -80,6 +80,9 @@ export class DishdetailComponent implements OnInit {
       comment: ['', Validators.required]
     })
     this.comment = this.commentForm.value;
+
+    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.onValueChanged(); // (re)set validation messages now
   }
 
   onValueChanged(data?: any) {
@@ -105,11 +108,19 @@ export class DishdetailComponent implements OnInit {
 
   // comment form Submit btn callback
   onSubmit() {
-    //this.comment = this.commentForm.value;
-    let comm = this.comment;
-    comm.date = Date.now().toString();
-    this.dish.comments.push(comm);
+    this.comment = this.commentForm.value;
+    this.comment.date = Date.now().toString();
     console.log(this.comment);
+    this.dishcopy.comments.push(this.comment);
+    this.dishservice.putDish(this.dishcopy)
+      .subscribe(dish =>{
+        this.dish = dish;
+        this.dishcopy = dish;
+      }, errMess =>{
+        this.dish = null;
+        this.dishcopy = null;
+        this.errMess = errMess;
+      });
     this.commentFormDirective.resetForm({
       author: '',
       rating: '5',
