@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { MatSliderModule } from '@angular/material/slider';
 
 // hammerJS
 import 'hammerjs';
@@ -71,7 +72,8 @@ import { from } from 'rxjs';
     ReactiveFormsModule,
     MatSelectModule,
     MatSlideToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSliderModule
   ],
   providers: [
     DishService,
