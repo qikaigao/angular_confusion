@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
-// import { DISHES } from '../shared/dishes';
 import { DishService } from '../services/dish.service';
 import { inject } from '@angular/core/testing';
 import { flyInOut, expand } from '../animations/app.animation';
@@ -26,7 +25,7 @@ export class MenuComponent implements OnInit {
 
   // this should be write like that. We cannot declare the disService in the typical way.
   constructor(private dishService: DishService,
-    @Inject('BaseURL') private BaseURL) { }
+    @Inject('BaseURL') public BaseURL) { }
 
   ngOnInit() {
     this.dishService.getDishes().subscribe((dishes) => this.dishes = dishes,
